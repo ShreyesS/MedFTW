@@ -8,81 +8,27 @@ import 'package:maps_launcher/maps_launcher.dart';
 
 import 'dart:convert';
 
-import 'package:medftw/app_screens/CarePlan.dart';
-
 // import 'dart:convert'
 
 // import 'package:medftw/app_screens/screens.dart';
 // import 'package:medftw/app_screens/upcomingEvents.dart';
 
-class HomeScreen extends StatefulWidget {
-  String patientName = "";
-  HomeScreen(patientName);
-
+class CarePlan extends StatefulWidget {
   @override
-  _HomeScreenState createState() {
-    print("Homescreen" + patientName);
-    return _HomeScreenState();
+  _CarePlanState createState() {
+    return _CarePlanState();
   }
 }
 
-class Person {
-  String name = "";
-  Person(String name) {
-    this.name = name;
-  }
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class _CarePlanState extends State<CarePlan> {
   String base64 = '';
-
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
-  }
 
   Future<String> getNameRequest() async {
     String url = "https://medftwserver.herokuapp.com/getnamefromid/" +
         DataStorage.id.toString();
     Uri uri = Uri.parse(url);
     final response = await http.get(uri);
-    print(response.body);
+    //print(response.body);
     Map<String, dynamic> map = json.decode(response.body);
     return map["name"];
   }
@@ -92,14 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
         DataStorage.name;
     Uri uri = Uri.parse(url);
     final response = await http.get(uri);
-    //print(response.body);
+    print(response.body);
 
     Map<String, dynamic> map = json.decode(response.body);
     return map["locationline"];
   }
 
   Future<String> setAddressRequest() async {
-    //print("Set address request was called");
+    print("Set address request was called");
     String url = "https://medftwserver.herokuapp.com/getlocationbyid/" +
         DataStorage.id.toString();
 
@@ -107,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Uri uri = Uri.parse(url);
     final response = await http.get(uri);
-    //print("SetAddress response body: " + response.body);
+    print("SetAddress response body: " + response.body);
 
     Map<String, dynamic> map = json.decode(response.body);
     DataStorage.address = map["locationline"];
-    //print("Set address request: " + map["locationline"]);
-    //print("static var: " + DataStorage.address);
+    print("Set address request: " + map["locationline"]);
+    print("static var: " + DataStorage.address);
 
     return map["locationline"];
   }
@@ -145,75 +91,35 @@ class _HomeScreenState extends State<HomeScreen> {
     return map["name"];
   }
 
-  FutureBuilder getNmObject() {
-    if (DataStorage.name == "") {
-      return FutureBuilder(
-          future: getNameRequest(),
-          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container(
-                child: Text(""),
-              );
-            } else {
-              DataStorage.name = snapshot.data;
-              return welcomeText();
-            }
-          });
-    } else {
-      return FutureBuilder(
-          future: getNameRequest(),
-          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-            return welcomeText();
-            // if (snapshot.data == null) {
-            //   return Container(
-            //     child: Text(""),
-            //   );
-            // } else {
-            //   DataStorage.name = snapshot.data;
-            //   return welcomeText();
-            // }
-          });
-    }
+  Future<List<dynamic>> getCarePlan() async {
+    //print("Getting care plan");
+    String url = "https://medftwserver.herokuapp.com/getcareplan/" +
+        DataStorage.id.toString();
+    Uri uri = Uri.parse(url);
+    final response = await http.get(uri);
+    //print("Care plan response: " + response.body.toString());
+    // print(response.body.runtimeType.toString());
+
+    var carePlans = json.decode(response.body);
+    //print("Runtime type of json: " + carePlans.runtimeType.toString());
+    //print("Care plan lists: " + carePlans.toString());
+
+    print(carePlans[0][0]);
+    // Map<String, dynamic> map = json.decode(response.body);
+    return carePlans;
   }
 
-  Future<Text> getInstantWelcomeText() async {
-    return welcomeText();
-  }
+  // Container carePlanCardGenerator(List<List<dynamic> carePlans)
+  // {
 
-  // Container getNameObject() {
-  //   if (DataStorage.name == null) {
-  //     return Container(
-  //         child: FutureBuilder(
-  //             future: getNameRequest(),
-  //             builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-  //               if (snapshot.data == null) {
-  //                 return Container(
-  //                   child: Text(""),
-  //                 );
-  //               } else {
-  //                 DataStorage.name = snapshot.data;
-  //                 return welcomeText();
-  //               }
-  //             }));
-  //   } else {
-  //     return Container(child: welcomeText());
-  //   }
   // }
-
-  Text welcomeText() {
-    return Text("Welcome " + DataStorage.name + "!",
-        style: TextStyle(
-            fontFamily: 'Montserrat',
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 25.0));
-  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: do getrequest
     // print("Get Request: " + getRequest());
-    setAddressRequest();
+    //setAddressRequest();
+    getCarePlan();
     return Scaffold(
         backgroundColor: Color(0xFF21BFBD),
         body: ListView(children: <Widget>[
@@ -258,7 +164,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> Buttons() {
     return <Widget>[
-      getNmObject(),
+      FutureBuilder(
+          future: getNameRequest(),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Text(""),
+              );
+            } else {
+              DataStorage.name = snapshot.data;
+              return Text("Welcome " + snapshot.data + "!",
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0));
+            }
+          }),
       // Text("Welcome " + DataStorage.name + "!",
       //     style: TextStyle(
       //         fontFamily: 'Montserrat',
@@ -270,15 +192,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: <Widget>[
             _buildButtonCard('Allergies', Colors.lightBlue, () {}),
-            _buildButtonCard('Immunizations', Colors.red, () {}),
+            _buildButtonCard('Personalized Practioner', Colors.red, () {}),
           ],
         ),
       ),
       Flexible(
         child: Row(
           children: <Widget>[
-            _buildButtonCard(
-                'Personalized Practitioners', Colors.orange, () {}),
+            _buildButtonCard('Immunizations', Colors.orange, () {}),
           ],
         ),
       ),
@@ -286,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: <Widget>[
             _buildButtonCard('Medication Record', Colors.green, () {}),
-            _buildButtonCard('Care Plan', Colors.pink, onClickCarePlan)
+            _buildButtonCard('Care Plan', Colors.pink, () {})
             // Image.memory(base64Decode('base64String'))
           ],
         ),
@@ -301,10 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     ];
-  }
-
-  onClickCarePlan() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => CarePlan()));
   }
 
   onClick() {
