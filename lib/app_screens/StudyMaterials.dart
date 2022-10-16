@@ -7,7 +7,7 @@ import 'CambridgeStudyMaterials.dart';
 import 'CBSEmaterials.dart';
 import 'ICSEmaterials.dart';
 import 'JEEmaterials.dart';
-import 'SATmaterials.dart';
+import 'Immunizations.dart';
 
 class StudyMaterials extends StatelessWidget {
   Future navigateToib(context) async {

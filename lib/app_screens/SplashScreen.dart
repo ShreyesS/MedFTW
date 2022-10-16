@@ -6,7 +6,7 @@ import 'package:medftw/app_screens/screens.dart';
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = Colors.white;
   final TextStyle styleTextUnderTheLoader = TextStyle(
-      fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black);
+  fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final splashDelay = 3;
-  String _textforsplash = 'The Ultimate Student Helper';
+  String _textforsplash = 'Med For The Win';
 
   @override
   void initState() {
@@ -24,7 +24,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _loadWidget() async {
     var _duration = Duration(seconds: splashDelay);
-    // return Timer(_duration, navigationPage);
     return Timer(_duration, PatientLoginPage);
   }
 
@@ -57,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        'images/img_splash.png',
+                        'images/medftw_splash.png',
                         height: 300,
                         width: 300,
                       ),

@@ -44,7 +44,7 @@ class _PatientLoginState extends State<PatientLogin> {
               Padding(
                   padding:
                       EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 20),
-                  child: Text("Enter your ID to see your health data",
+                  child: Text("Enter your personal ID to see your Health Data",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: "Montserrat",
