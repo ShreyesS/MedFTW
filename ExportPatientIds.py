@@ -1,6 +1,4 @@
 from asyncio import run_coroutine_threadsafe
-from numbers import Real
-from asyncio import run_coroutine_threadsafe
 import requests
 from ApiFunctions import *
 

@@ -3,13 +3,7 @@ import requests
 from ApiFunctions import *
 
 def getPractitionerInformation(id):
-    practitioner = getRequest('Patient', f'/{id}').keys()
-    if not practitioner:
-        print("No Practitioner Found")
-        return False
-    practInfo = practitioner[0]['generalPractitioner']['display']
-    practID = practitioner[0]['generalPractitioner']['display']
-    print(practInfo)
-    print(practID)
-
-getPractitionerInformation(778)
+    name = getNameById(id)
+    location = getLocationByName(name)
+    print(location)
+getPractitionerInformation(208537)

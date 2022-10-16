@@ -63,3 +63,17 @@ def getPatientByName(name):
 
 def getPatientById(id):
     return getRequest('Patient', f'/{id}')
+
+def getNameById(id):
+    return getPatientById(id)['name'][0]['given'][0]
+
+def getIdByName(name):
+    return getPatientByName(name)['resource']['id']
+
+def getLocationByName(name):
+    patient = getPatientByName(name)
+    if patient:
+        location = patient['resource']['address'][0]
+        locationLL = location['extension'][0]['extension']
+        locationLine = f"{location['line'][0]}, {location['city']}, {location['state']} {location['postalCode']}"
+        return (locationLL[0]['valueDecimal'], locationLL[1]['valueDecimal'], locationLine)

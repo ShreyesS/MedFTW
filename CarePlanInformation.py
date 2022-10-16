@@ -16,10 +16,10 @@ def getCarePlanInformation(id):
         for st in s:
             if st[:1] != '<' and st[:1]:
                 strings.append(st.split('<')[0])
-        care = {'type' : strings[0],
-                'activity' : strings[2],
-                'intent' : strings[4]
-                }
+        care = [strings[0],
+                strings[2],
+                strings[4]
+                ]
         plans.append(care)
     
     return plans
