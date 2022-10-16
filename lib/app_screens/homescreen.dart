@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medftw/app_config/palette.dart';
 import 'package:medftw/app_config/styles.dart';
-import 'package:medftw/app_screens/screens.dart';
-import 'package:medftw/app_screens/upcomingEvents.dart';
+// import 'package:medftw/app_screens/screens.dart';
+// import 'package:medftw/app_screens/upcomingEvents.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,10 +10,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future navigateToStudyMaterials(context) async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => StudyMaterials()));
-  }
+  // Future navigateToStudyMaterials(context) async {
+  //   Navigator.push(
+  //       context, MaterialPageRoute(builder: (context) => StudyMaterials()));
+  // }
 
   @override
   Widget build(BuildContext context) {
