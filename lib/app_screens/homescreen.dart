@@ -9,6 +9,7 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'dart:convert';
 
 import 'package:medftw/app_screens/CarePlan.dart';
+import 'package:medftw/app_screens/NearestPractitioner.dart';
 
 // import 'dart:convert'
 
@@ -290,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: <Widget>[
             _buildButtonCard(
-                'Personalized Practitioners', Colors.orange, () {}),
+                'Personalized Practitioners', Colors.orange, onClickPractitioners),
           ],
         ),
       ),
@@ -317,6 +318,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   onClickCarePlan() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CarePlan()));
+  }
+
+  onClickPractitioners() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => NearestPractitioner()));
   }
 
   onClick() {
@@ -372,7 +378,7 @@ Expanded _buildButtonCard(String title, MaterialColor color, onClick) {
                       children: <Widget>[
                         // const SizedBox(width: 100, height: 10),
                         Text(title,
-                          textAlign: TextAlign.center,
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,

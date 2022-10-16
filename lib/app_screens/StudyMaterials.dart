@@ -7,7 +7,7 @@ import 'CambridgeStudyMaterials.dart';
 import 'CBSEmaterials.dart';
 import 'ICSEmaterials.dart';
 import 'JEEmaterials.dart';
-import 'Immunizations.dart';
+import 'NearestPractitioner.dart';
 
 class StudyMaterials extends StatelessWidget {
   Future navigateToib(context) async {
@@ -32,7 +32,7 @@ class StudyMaterials extends StatelessWidget {
 
   Future navigateToSAT(context) async {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SATmaterials()));
+        context, MaterialPageRoute(builder: (context) => Container()));
   }
 
   Future navigateToJEE(context) async {
