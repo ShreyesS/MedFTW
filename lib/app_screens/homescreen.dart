@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<String> getNameRequest() async {
-    String url = "https://medftwserver.herokuapp.com/getnamefromid/" +
+    String url = "https://medftwserver.herokuapp.com/getcleannamefromid/" +
         DataStorage.id.toString();
     Uri uri = Uri.parse(url);
     final response = await http.get(uri);

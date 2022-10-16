@@ -119,47 +119,47 @@ class _CarePlanState extends State<CarePlan> {
     return carePlans;
   }
 
-  // List<List<String>> decodeJson(String json) {
-  //   List<List<String>> plan = List.empty();
-  //   int x = -1;
-  //   int y = -1;
-  //   String j = json;
-  //   j = j.substring(2);
-
-  //   while (j.length > 0) {
-  //     if (j[0].compareTo("[") == true) {
-  //       x += 1;
-  //       j.substring(1);
-  //     }
-
-  //     while(j[0].compareTo("]") == false)
-  //     {
-  //       plan[x]
-  //     }
-  //   }
-
-  //   return plan;
-  // }
-
-  ListView carePlanCardGenerator(List<dynamic> carePlans) {
+  Padding carePlanCardGenerator(List<dynamic> carePlans) {
     print("GEnerating care plans and length is: " +
         DataStorage.carePlans.length.toString());
-    return ListView.builder(
-        itemCount: DataStorage.carePlans.length,
-        itemBuilder: ((context, index) =>
-            planDetail(DataStorage.carePlans[index])));
+    return Padding(
+      padding: EdgeInsets.only(top: 0, bottom: 0, left: 25, right: 25),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+              width: MediaQuery.of(context).size.height * 0.5,
+              height: 700,
+              child: ListView.builder(
+                  itemCount: DataStorage.carePlans.length,
+                  itemBuilder: ((context, index) {
+                    return planDetail(DataStorage.carePlans[index]);
+                  })))
+        ],
+      ),
+    );
   }
 
-  Container planDetail(List<dynamic> details) {
+  Padding planDetail(List<dynamic> details) {
     print("Plan detail");
-    return Container(
-      child: Text(details[2],
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 25.0)),
-    );
+    return Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: Container(
+          alignment: Alignment.center,
+          // margin: EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.blueGrey,
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: Text(details[2],
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25.0)),
+        ));
   }
 
   @override
@@ -169,64 +169,50 @@ class _CarePlanState extends State<CarePlan> {
     //getCarePlan();
     return Scaffold(
         backgroundColor: Color(0xFF21BFBD),
-        body: FutureBuilder(
-          future: getCarePlan(),
-          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-            // if (snapshot.data != null && snapshot.data?.length != 0) {
-            //   print(snapshot.data?[0]);
-            // }
-            //print("LEN: " + snapshot.data.length.toString());
-            if (snapshot.hasData) {
-              if (DataStorage.carePlans == null) {
-                return Text("NO data");
-              } else {
-                print("TYPE: " + DataStorage.carePlans.runtimeType.toString());
-                return carePlanCardGenerator(DataStorage.carePlans);
-              }
-            }
-            return Container();
-          },
-        )
-        // carePlanCardGenerator()
-        // body: ListView(children: <Widget>[
-        //   const Padding(
-        //     padding: EdgeInsets.only(top: 50.0, left: 15.0),
-        //   ),
-        //   Padding(
-        //     padding: EdgeInsets.fromLTRB(100, 0, 10, 0),
-        //     child: Header(),
-        //   ),
-        //   const SizedBox(height: 40.0),
-        //   Container(
-        //       padding: const EdgeInsets.only(top: 30, bottom: 60),
-        //       height: MediaQuery.of(context).size.height * 0.73,
-        //       decoration: const BoxDecoration(
-        //         color: Colors.white,
-        //         borderRadius:
-        //             BorderRadius.only(topLeft: Radius.circular(100.0)),
-        //       ),
-        //       child: Column(children: Buttons()))
-        //   // FutureBuilder(
-        //   //     future: getRequest(),
-        //   //     builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-        //   //       if (snapshot.data == null) {
-        //   //         return Container(
-        //   //           child: Text("No data"),
-        //   //         );
-        //   //       } else {
-        //   //         return Text(snapshot.data);
-        //   // return ListView.builder(
-        //   //   itemCount: snapshot.data.length,
-        //   //   itemBuilder: (ctx, index) => ListTile(
-        //   //     title: Text(snapshot.data[index].title),
-        //   //     subtitle: Text(snapshot.data[index].body),
-        //   //     contentPadding: EdgeInsets.only(bottom: 20.0),
-        //   //   ),
-        //   // );
-        //   // }
-        //   // }),
-        // ])
-        );
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //Padding(padding: EdgeInsets.only(top: 70)),
+            Padding(
+              padding: EdgeInsets.only(left: 50, right: 20, top: 70),
+              child: Text(DataStorage.name + ", here are your health plans.",
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0)),
+            ),
+            SizedBox(
+              height: 700,
+              width: MediaQuery.of(context).size.width,
+              child: FutureBuilder(
+                future: getCarePlan(),
+                builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                  // if (snapshot.data != null && snapshot.data?.length != 0) {
+                  //   print(snapshot.data?[0]);
+                  // }
+                  //print("LEN: " + snapshot.data.length.toString());
+                  if (snapshot.hasData) {
+                    if (DataStorage.carePlans == null) {
+                      return Text("No data");
+                    } else {
+                      print("TYPE: " +
+                          DataStorage.carePlans.runtimeType.toString());
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            carePlanCardGenerator(DataStorage.carePlans)
+                          ]);
+                    }
+                  }
+                  return Container();
+                },
+              ),
+            ),
+          ],
+        ));
   }
 
   List<Widget> Buttons() {
