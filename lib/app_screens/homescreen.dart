@@ -258,7 +258,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> Buttons() {
     return <Widget>[
-      getNmObject(),
+      FutureBuilder(
+          future: getNameRequest(),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Text(""),
+              );
+            } else {
+              DataStorage.name = snapshot.data;
+              return welcomeText();
+            }
+          }),
       // Text("Welcome " + DataStorage.name + "!",
       //     style: TextStyle(
       //         fontFamily: 'Montserrat',

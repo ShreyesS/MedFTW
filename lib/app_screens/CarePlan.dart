@@ -92,74 +92,104 @@ class _CarePlanState extends State<CarePlan> {
   }
 
   Future<List<dynamic>> getCarePlan() async {
-    //print("Getting care plan");
+    print("Getting care plan");
     String url = "https://medftwserver.herokuapp.com/getcareplan/" +
         DataStorage.id.toString();
     Uri uri = Uri.parse(url);
     final response = await http.get(uri);
-    //print("Care plan response: " + response.body.toString());
+    // print("Care plan response: " + response.body.toString());
     // print(response.body.runtimeType.toString());
 
     var carePlans = json.decode(response.body);
     //print("Runtime type of json: " + carePlans.runtimeType.toString());
     //print("Care plan lists: " + carePlans.toString());
 
-    print(carePlans[0][0]);
+    print("Care plan first item: " + carePlans[0][0]);
+    //DataStorage.carePlans = carePlans;
+    // print("data storage count: " + DataStorage.carePlans.length.toString());
     // Map<String, dynamic> map = json.decode(response.body);
     return carePlans;
   }
 
-  // Container carePlanCardGenerator(List<List<dynamic> carePlans)
-  // {
+  ListView carePlanCardGenerator(List<List<dynamic>> carePlans) {
+    print(
+        "GEnerating care plans and length is: " + carePlans.length.toString());
+    return ListView.builder(
+        itemCount: carePlans.length,
+        itemBuilder: ((context, index) => planDetail(carePlans[index])));
+  }
 
-  // }
+  Container planDetail(List<dynamic> details) {
+    print("Plan detail");
+    return Container(
+      child: Text(details[2],
+          style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: do getrequest
     // print("Get Request: " + getRequest());
     //setAddressRequest();
-    getCarePlan();
+    //getCarePlan();
     return Scaffold(
         backgroundColor: Color(0xFF21BFBD),
-        body: ListView(children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.only(top: 50.0, left: 15.0),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(100, 0, 10, 0),
-            child: Header(),
-          ),
-          const SizedBox(height: 40.0),
-          Container(
-              padding: const EdgeInsets.only(top: 30, bottom: 60),
-              height: MediaQuery.of(context).size.height * 0.73,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius:
-                    BorderRadius.only(topLeft: Radius.circular(100.0)),
-              ),
-              child: Column(children: Buttons()))
-          // FutureBuilder(
-          //     future: getRequest(),
-          //     builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-          //       if (snapshot.data == null) {
-          //         return Container(
-          //           child: Text("No data"),
-          //         );
-          //       } else {
-          //         return Text(snapshot.data);
-          // return ListView.builder(
-          //   itemCount: snapshot.data.length,
-          //   itemBuilder: (ctx, index) => ListTile(
-          //     title: Text(snapshot.data[index].title),
-          //     subtitle: Text(snapshot.data[index].body),
-          //     contentPadding: EdgeInsets.only(bottom: 20.0),
-          //   ),
-          // );
-          // }
-          // }),
-        ]));
+        body: FutureBuilder(
+          future: getCarePlan(),
+          builder: (context, snapshot) {
+            // if (snapshot.data != null && snapshot.data?.length != 0) {
+            //   print(snapshot.data?[0]);
+            // }
+            // print("LEN: " snapshot.data?.length);
+            return carePlanCardGenerator(snapshot.data?[0]);
+            // return Container();
+          },
+        )
+        // carePlanCardGenerator()
+        // body: ListView(children: <Widget>[
+        //   const Padding(
+        //     padding: EdgeInsets.only(top: 50.0, left: 15.0),
+        //   ),
+        //   Padding(
+        //     padding: EdgeInsets.fromLTRB(100, 0, 10, 0),
+        //     child: Header(),
+        //   ),
+        //   const SizedBox(height: 40.0),
+        //   Container(
+        //       padding: const EdgeInsets.only(top: 30, bottom: 60),
+        //       height: MediaQuery.of(context).size.height * 0.73,
+        //       decoration: const BoxDecoration(
+        //         color: Colors.white,
+        //         borderRadius:
+        //             BorderRadius.only(topLeft: Radius.circular(100.0)),
+        //       ),
+        //       child: Column(children: Buttons()))
+        //   // FutureBuilder(
+        //   //     future: getRequest(),
+        //   //     builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+        //   //       if (snapshot.data == null) {
+        //   //         return Container(
+        //   //           child: Text("No data"),
+        //   //         );
+        //   //       } else {
+        //   //         return Text(snapshot.data);
+        //   // return ListView.builder(
+        //   //   itemCount: snapshot.data.length,
+        //   //   itemBuilder: (ctx, index) => ListTile(
+        //   //     title: Text(snapshot.data[index].title),
+        //   //     subtitle: Text(snapshot.data[index].body),
+        //   //     contentPadding: EdgeInsets.only(bottom: 20.0),
+        //   //   ),
+        //   // );
+        //   // }
+        //   // }),
+        // ])
+        );
   }
 
   List<Widget> Buttons() {
