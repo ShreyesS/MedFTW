@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medftw/app_screens/ContactUs.dart';
 import 'package:medftw/app_screens/UpcomingInternships.dart';
 import 'package:medftw/app_screens/screens.dart';
 import 'dart:async';
@@ -32,8 +33,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   Widget build(BuildContext context) {
     _screens = [
       HomeScreen(widget.patientName),
-      UpcomingEvents(widget.patientName),
-      FindPlace(widget.patientName),
+      ContactUs(widget.patientName),
     ];
     return Scaffold(
       body: _screens[_currentIndex],
@@ -47,7 +47,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
         elevation: 0.0,
-        items: [Icons.home, Icons.medical_services, Icons.location_on]
+        items: [Icons.home, Icons.wechat_rounded]
             .asMap()
             .map((key, value) => MapEntry(
                   key,
