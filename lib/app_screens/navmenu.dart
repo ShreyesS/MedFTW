@@ -6,20 +6,35 @@ import 'dart:async';
 import 'package:medftw/app_screens/upcomingEvents.dart';
 
 class BottomNavScreen extends StatefulWidget {
+  String patientName = "";
+  BottomNavScreen(patientName) {
+    this.patientName = patientName;
+  }
+
   @override
-  _BottomNavScreenState createState() => _BottomNavScreenState();
+  _BottomNavScreenState createState() {
+    return _BottomNavScreenState();
+  }
 }
 
 class _BottomNavScreenState extends State<BottomNavScreen> {
-  final List _screens = [
-    HomeScreen(),
-    UpcomingEvents(),
-    Tipsforstudents(),
-  ];
+  List _screens = List.empty();
   int _currentIndex = 0;
+
+  String _patientName = "";
+  // @override
+  // void setState(VoidCallback fn) {
+  //   print("Set state");
+  //   _patientName = widget.patientName;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    _screens = [
+      HomeScreen(widget.patientName),
+      UpcomingEvents(widget.patientName),
+      FindPlace(widget.patientName),
+    ];
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

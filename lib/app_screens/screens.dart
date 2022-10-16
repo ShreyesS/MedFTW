@@ -12,6 +12,6 @@ export 'Splashscreen.dart';
 export 'navmenu.dart';
 export 'homescreen.dart';
 
-export 'Tipsforstudents.dart';
+export 'FindPlace.dart';
 export 'upcomingEvents.dart';
 //export 'UpcomingInternships.dart';

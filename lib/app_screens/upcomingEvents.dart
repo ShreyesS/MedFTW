@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpcomingEvents extends StatelessWidget {
+  String patientName = "";
+  UpcomingEvents(patientName);
+
   _launchURLmun() async {
     const url = 'https://munlist.com/';
     Uri uri = Uri(path: url);

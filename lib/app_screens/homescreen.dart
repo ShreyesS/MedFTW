@@ -2,40 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:medftw/app_config/palette.dart';
 import 'package:medftw/app_config/styles.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:medftw/DataStorage.dart';
+import 'package:http/http.dart' as http;
+
+import 'dart:convert';
+
+// import 'dart:convert'
 
 // import 'package:medftw/app_screens/screens.dart';
 // import 'package:medftw/app_screens/upcomingEvents.dart';
 
 class HomeScreen extends StatefulWidget {
+  String patientName = "";
+  HomeScreen(patientName);
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenState createState() {
+    print("Homescreen" + patientName);
+    return _HomeScreenState();
+  }
+}
+
+class Person {
+  String name = "";
+  Person(String name) {
+    this.name = name;
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Future navigateToStudyMaterials(context) async {
-  //   Navigator.push(
-  //       context, MaterialPageRoute(builder: (context) => StudyMaterials()));
-  // }
-
-// code that was inside the padding at the top
-// child: Row(
-  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //   // children: <Widget>[
-  //   //   Container(
-  //   //       width: 125.0,
-  //   //       child: Row(
-  //   //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //   //         // children: <Widget>[
-  //   //         //   IconButton(
-  //   //         //     icon: Icon(Icons.info),
-  //   //         //     color: Color.fromRGBO(33, 191, 189, 1),
-  //   //         //     onPressed: () {},
-  //   //         //   )
-  //   //         // ],
-  //   //       )
-  //   //   )
-  //   // ],
-  // ),
+  String base64 = '';
 
   /// Determine the current position of the device.
   ///
@@ -78,8 +74,38 @@ class _HomeScreenState extends State<HomeScreen> {
     return await Geolocator.getCurrentPosition();
   }
 
+  Future<String> getRequest() async {
+    print("Test print");
+    //replace your restFull API here.
+    String url =
+        "https://medftwserver.herokuapp.com/getlocation/" + DataStorage.name;
+    Uri uri = Uri.parse(url);
+    final response = await http.get(uri);
+    print(response.body);
+    Map<String, dynamic> map = json.decode(response.body);
+    print(map["name"]);
+    // Person responseData = json.decode(response.body);
+
+    // print("Response data: " + responseData.name);
+    //Creating a list to store input data;
+    // List<User> users = [];
+    // for (var singleUser in responseData) {
+    //   User user = User(
+    //       id: singleUser["id"],
+    //       userId: singleUser["userId"],
+    //       title: singleUser["title"],
+    //       body: singleUser["body"]);
+
+    //   //Adding user to the list.
+    //   users.add(user);
+    // }
+    return map["name"];
+  }
+
   @override
   Widget build(BuildContext context) {
+    // TODO: do getrequest
+    // print("Get Request: " + getRequest());
     return Scaffold(
         backgroundColor: Color(0xFF21BFBD),
         body: ListView(children: <Widget>[
@@ -99,13 +125,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius:
                     BorderRadius.only(topLeft: Radius.circular(100.0)),
               ),
-              child: Column(children: Buttons()))
+              child: Column(children: Buttons())),
+          FutureBuilder(
+              future: getRequest(),
+              builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  return Container(
+                    child: Text("No data"),
+                  );
+                } else {
+                  return Text(snapshot.data);
+                  // return ListView.builder(
+                  //   itemCount: snapshot.data.length,
+                  //   itemBuilder: (ctx, index) => ListTile(
+                  //     title: Text(snapshot.data[index].title),
+                  //     subtitle: Text(snapshot.data[index].body),
+                  //     contentPadding: EdgeInsets.only(bottom: 20.0),
+                  //   ),
+                  // );
+                }
+              }),
         ]));
   }
 
   List<Widget> Buttons() {
     return <Widget>[
-      const Text('Offering Resources for:',
+      Text("Welcome " + DataStorage.name + "!",
           style: TextStyle(
               fontFamily: 'Montserrat',
               color: Colors.black,
@@ -115,47 +160,31 @@ class _HomeScreenState extends State<HomeScreen> {
       Flexible(
         child: Row(
           children: <Widget>[
-            _buildButtonCard('Test1', Colors.lightBlue),
-            _buildButtonCard('Test2', Colors.red),
-          ],
-          // children: [
-          //   TextButton(
-          //       onPressed: () {
-          //         print("Test");
-          //       },
-          //       child: Text("Test"),
-          //       style: ButtonStyle(
-          //           foregroundColor:
-          //               MaterialStateProperty.all<Color>(Colors.blue),
-          //           shape: MaterialStateProperty.all<
-          //                   RoundedRectangleBorder>(
-          //               RoundedRectangleBorder(
-          //                   borderRadius: BorderRadius.circular(50.0),
-          //                   side: BorderSide(color: Colors.red))),
-          //           backgroundColor:
-          //               MaterialStateProperty.all<Color>(Colors.red)))
-          // ],
-        ),
-      ),
-      Flexible(
-        child: Row(
-          children: <Widget>[
-            _buildButtonCard('Test3', Colors.orange),
+            _buildButtonCard('Allergies', Colors.lightBlue),
+            _buildButtonCard('Personalized Practioner', Colors.red),
           ],
         ),
       ),
       Flexible(
         child: Row(
           children: <Widget>[
-            _buildButtonCard('Test4', Colors.green),
-            _buildButtonCard('Test5', Colors.pink),
+            _buildButtonCard('Immunizations', Colors.orange),
           ],
         ),
       ),
       Flexible(
         child: Row(
           children: <Widget>[
-            _buildButtonCard('Test6', Colors.purple),
+            _buildButtonCard('Medication Record', Colors.green),
+            _buildButtonCard('Care Plan', Colors.pink)
+            // Image.memory(base64Decode('base64String'))
+          ],
+        ),
+      ),
+      Flexible(
+        child: Row(
+          children: <Widget>[
+            _buildButtonCard('Find Hospital Near Me', Colors.purple),
           ],
         ),
       ),
@@ -170,16 +199,17 @@ class _HomeScreenState extends State<HomeScreen> {
 Row Header() {
   return Row(
     children: <Widget>[
+      SizedBox(width: 10.0),
       Text('Med',
           style: TextStyle(
               fontFamily: 'Montserrat',
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 27.0)),
-      SizedBox(width: 5.0),
+              fontSize: 30.0)),
+      SizedBox(width: 10),
       Text('For The Win',
           style: TextStyle(
-              fontFamily: 'Montserrat', color: Colors.white, fontSize: 27.0))
+              fontFamily: 'Montserrat', color: Colors.white, fontSize: 24.0))
     ],
   );
 }
