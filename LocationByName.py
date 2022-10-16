@@ -9,5 +9,3 @@ def LocationByName(name):
         locationLL = location['extension'][0]['extension']
         locationLine = f"{location['line'][0]}, {location['city']}, {location['state']} {location['postalCode']}"
         return (locationLL[0]['valueDecimal'], locationLL[1]['valueDecimal'], locationLine)
-
-print(LocationByName('Ayala'))

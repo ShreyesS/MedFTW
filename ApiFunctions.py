@@ -55,3 +55,6 @@ def getPatientByName(name):
         print(f'Returning first of {len(patient)} patients found')
         return patient[0]
     return patient[0]
+
+def getPatientById(id):
+    return getRequest('Patient', f'/{id}')
