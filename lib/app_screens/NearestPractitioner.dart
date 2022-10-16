@@ -114,16 +114,16 @@ class _NearestPractitioner extends State<NearestPractitioner> {
     final response = await http.get(uri);
 
     var nearestPracts = json.decode(response.body);
-    // print("Runtime type of json: " + carePlans.runtimeType.toString());
+    print("Runtime type of json: " + nearestPracts.runtimeType.toString());
 
     // print("Length: " + DataStorage.carePlans.toString());
-
+    DataStorage.practitioners = nearestPracts;
     return nearestPracts;
   }
 
   Padding nearestPractGenerator(List<dynamic> carePlans) {
     print("GEnerating care plans and length is: " +
-        DataStorage.carePlans.length.toString());
+        DataStorage.practitioners.length.toString());
     return Padding(
       padding: EdgeInsets.only(top: 0, bottom: 0, left: 25, right: 25),
       child: Column(
@@ -134,9 +134,10 @@ class _NearestPractitioner extends State<NearestPractitioner> {
               width: MediaQuery.of(context).size.height * 0.5,
               height: 700,
               child: ListView.builder(
-                  itemCount: DataStorage.carePlans.length,
+                  itemCount: DataStorage.practitioners.length,
                   itemBuilder: ((context, index) {
-                    return nearestPractDetails(DataStorage.carePlans[index]);
+                    return nearestPractDetails(
+                        DataStorage.practitioners[index]);
                   })))
         ],
       ),
@@ -152,7 +153,7 @@ class _NearestPractitioner extends State<NearestPractitioner> {
           // margin: EdgeInsets.all(20),
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.blueGrey,
+            color: Colors.deepOrange,
             borderRadius: BorderRadius.circular(5.0),
           ),
           child: Text(details[0],
@@ -170,7 +171,7 @@ class _NearestPractitioner extends State<NearestPractitioner> {
     //setAddressRequest();
     //getCarePlan();
     return Scaffold(
-        backgroundColor: Color(0xFF21BFBD),
+        backgroundColor: Colors.orange,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,12 +201,12 @@ class _NearestPractitioner extends State<NearestPractitioner> {
                       return Text("No data");
                     } else {
                       print("TYPE: " +
-                          DataStorage.carePlans.runtimeType.toString());
+                          DataStorage.practitioners.runtimeType.toString());
                       return Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            nearestPractGenerator(DataStorage.carePlans)
+                            nearestPractGenerator(DataStorage.practitioners)
                           ]);
                     }
                   }

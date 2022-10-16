@@ -150,7 +150,7 @@ class _CarePlanState extends State<CarePlan> {
           // margin: EdgeInsets.all(20),
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.blueGrey,
+            color: Color.fromARGB(255, 173, 22, 72),
             borderRadius: BorderRadius.circular(5.0),
           ),
           child: Text(details[2],
@@ -168,7 +168,7 @@ class _CarePlanState extends State<CarePlan> {
     //setAddressRequest();
     //getCarePlan();
     return Scaffold(
-        backgroundColor: Color(0xFF21BFBD),
+        backgroundColor: Colors.pink,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
