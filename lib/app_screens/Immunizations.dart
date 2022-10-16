@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SATmaterials extends StatelessWidget {
+class Immunizations extends StatelessWidget {
   _launchURLsatOff() async {
     const url = 'https://collegereadiness.collegeboard.org/sat';
     if (await canLaunch(url)) {
@@ -35,7 +35,7 @@ class SATmaterials extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.red,
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -84,7 +84,7 @@ class SATmaterials extends StatelessWidget {
             child: Text("The official SAT website"),
             onPressed: _launchURLsatOff,
             style: ElevatedButton.styleFrom(
-              primary: Colors.pink,
+              primary: Colors.red,
               onPrimary: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
@@ -100,7 +100,7 @@ class SATmaterials extends StatelessWidget {
           child: Text("Official SAT Practice Tests"),
           onPressed: _launchURLsatPT,
           style: ElevatedButton.styleFrom(
-            primary: Colors.pink,
+            primary: Colors.red,
             onPrimary: Colors.white,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
@@ -117,7 +117,7 @@ class SATmaterials extends StatelessWidget {
           child: Text("Khan Academy Practice Resources"),
           onPressed: _launchURLsatKA,
           style: ElevatedButton.styleFrom(
-            primary: Colors.pink,
+            primary: Colors.red,
             onPrimary: Colors.white,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),

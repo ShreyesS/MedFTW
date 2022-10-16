@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class InternshipWidget extends StatelessWidget {
+class MedicationRecord extends StatelessWidget {
   _launchURLintern() async {
     const url = 'https://internshala.com/internships/work-from-home-jobs';
     if (await canLaunch(url)) {
@@ -37,7 +37,7 @@ class InternshipWidget extends StatelessWidget {
       10: "CSR Coordination",
     };
     return Scaffold(
-        backgroundColor: Colors.pink, body: SizedBox(height: 100, width: 100)
+        backgroundColor: Colors.green, body: SizedBox(height: 100, width: 100)
         // body: ListView(
 
         //     children: <Widget>[

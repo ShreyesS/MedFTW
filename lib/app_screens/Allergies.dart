@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ICSEmaterials extends StatelessWidget {
+class Allergies extends StatelessWidget {
   _launchURLcisce() async {
     const url = 'https://www.cisce.org/';
     if (await canLaunch(url)) {
