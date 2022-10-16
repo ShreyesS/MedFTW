@@ -12,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  
   final splashDelay = 3;
   String _textforsplash = 'The Ultimate Student Helper';
 
@@ -29,7 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => BottomNavScreen()));
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
   }
 
   @override
@@ -49,25 +49,26 @@ class _SplashScreenState extends State<SplashScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        'images/img_splash.png',
+                        'images\\allergies.svg',
                         height: 300,
                         width: 300,
                       ),
-                      Padding( padding: EdgeInsets.only(bottom: 15.0),),
-
                       Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 100),
-                child:Text('The Ultimate Student Helper  (TUSH)',
-                textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25.0)),),
+                        padding: EdgeInsets.only(bottom: 15.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 100),
+                        child: Text('Med For the Win',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25.0)),
+                      ),
                     ],
                   )),
                 ),
-                
               ],
             ),
           ],
