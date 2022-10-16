@@ -18,7 +18,7 @@ class PatientLogin extends StatefulWidget {
 }
 
 class _PatientLoginState extends State<PatientLogin> {
-  TextEditingController nameController = new TextEditingController();
+  TextEditingController idController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _PatientLoginState extends State<PatientLogin> {
               Padding(
                   padding:
                       EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 20),
-                  child: Text("Enter your name to see your health data",
+                  child: Text("Enter your ID to see your health data",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: "Montserrat",
@@ -56,10 +56,10 @@ class _PatientLoginState extends State<PatientLogin> {
                 height: 50,
                 width: MediaQuery.of(context).size.width * 0.80,
                 child: TextField(
-                  controller: nameController,
+                  controller: idController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Name',
+                    hintText: 'ID',
                   ),
                 ),
               ),
@@ -72,12 +72,18 @@ class _PatientLoginState extends State<PatientLogin> {
   }
 
   onClickSubmitButton() {
-    print("onClick:" + nameController.text);
-    DataStorage.name = nameController.text;
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => BottomNavScreen(nameController.text)));
+    print("onClick:" + idController.text);
+    // if the text is not empty and the text inputted is a number
+    if (idController.text.isNotEmpty &&
+        int.tryParse(idController.text) != null) {
+      DataStorage.id = int.parse(idController.text);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => BottomNavScreen(idController.text)));
+    } else {
+      print("Invalid text");
+    }
   }
 
   Container _buildRegularButtonCard(

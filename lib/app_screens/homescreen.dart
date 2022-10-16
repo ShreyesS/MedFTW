@@ -74,6 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return await Geolocator.getCurrentPosition();
   }
 
+  Future<String> getNameRequest() async {
+    String url =
+        "https://medftwserver.herokuapp.com/getnamefromid/" + DataStorage.id.toString();
+    Uri uri = Uri.parse(url);
+    final response = await http.get(uri);
+    print(response.body);
+    Map<String, dynamic> map = json.decode(response.body);
+    return map["name"];
+  }
+
   Future<String> getRequest() async {
     print("Test print");
     //replace your restFull API here.
@@ -150,12 +160,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> Buttons() {
     return <Widget>[
-      Text("Welcome " + DataStorage.name + "!",
-          style: TextStyle(
+      FutureBuilder(
+          future: getNameRequest(),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Text(""),
+              );
+            } else {
+              return Text("Welcome " + snapshot.data + "!",
+              style: TextStyle(
               fontFamily: 'Montserrat',
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 25.0)),
+              fontSize: 25.0));
+            }
+          }),
+      // Text("Welcome " + DataStorage.name + "!",
+      //     style: TextStyle(
+      //         fontFamily: 'Montserrat',
+      //         color: Colors.black,
+      //         fontWeight: FontWeight.bold,
+      //         fontSize: 25.0)),
       const Padding(padding: EdgeInsets.only(top: 45.0)),
       Flexible(
         child: Row(
