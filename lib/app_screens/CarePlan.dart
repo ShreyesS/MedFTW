@@ -97,26 +97,57 @@ class _CarePlanState extends State<CarePlan> {
         DataStorage.id.toString();
     Uri uri = Uri.parse(url);
     final response = await http.get(uri);
-    // print("Care plan response: " + response.body.toString());
-    // print(response.body.runtimeType.toString());
+    //print("Care plan response: " + response.body.toString());
+    // print("Response: " + response.body.toString());
 
+    //Map<String, dynamic> carePlans = json.decode(response.body);
+
+    // Iterable l = json.decode(response.body);
+    // List<List<String>> posts = List<List<String>>.from(l.map((model) => [](model)));
     var carePlans = json.decode(response.body);
-    //print("Runtime type of json: " + carePlans.runtimeType.toString());
+    print("Runtime type of json: " + carePlans.runtimeType.toString());
     //print("Care plan lists: " + carePlans.toString());
+    //carePlans = List<List<String>>(carePlans);
+    //print("Length: " + carePlans.length.toString());
 
-    print("Care plan first item: " + carePlans[0][0]);
-    //DataStorage.carePlans = carePlans;
+    //print("Care plan first item: " + carePlans[0][0]);
+    DataStorage.carePlans = carePlans;
+    print("Length: " + DataStorage.carePlans.toString());
+
     // print("data storage count: " + DataStorage.carePlans.length.toString());
     // Map<String, dynamic> map = json.decode(response.body);
     return carePlans;
   }
 
-  ListView carePlanCardGenerator(List<List<dynamic>> carePlans) {
-    print(
-        "GEnerating care plans and length is: " + carePlans.length.toString());
+  // List<List<String>> decodeJson(String json) {
+  //   List<List<String>> plan = List.empty();
+  //   int x = -1;
+  //   int y = -1;
+  //   String j = json;
+  //   j = j.substring(2);
+
+  //   while (j.length > 0) {
+  //     if (j[0].compareTo("[") == true) {
+  //       x += 1;
+  //       j.substring(1);
+  //     }
+
+  //     while(j[0].compareTo("]") == false)
+  //     {
+  //       plan[x]
+  //     }
+  //   }
+
+  //   return plan;
+  // }
+
+  ListView carePlanCardGenerator(List<dynamic> carePlans) {
+    print("GEnerating care plans and length is: " +
+        DataStorage.carePlans.length.toString());
     return ListView.builder(
-        itemCount: carePlans.length,
-        itemBuilder: ((context, index) => planDetail(carePlans[index])));
+        itemCount: DataStorage.carePlans.length,
+        itemBuilder: ((context, index) =>
+            planDetail(DataStorage.carePlans[index])));
   }
 
   Container planDetail(List<dynamic> details) {
@@ -133,7 +164,6 @@ class _CarePlanState extends State<CarePlan> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: do getrequest
     // print("Get Request: " + getRequest());
     //setAddressRequest();
     //getCarePlan();
@@ -141,13 +171,20 @@ class _CarePlanState extends State<CarePlan> {
         backgroundColor: Color(0xFF21BFBD),
         body: FutureBuilder(
           future: getCarePlan(),
-          builder: (context, snapshot) {
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
             // if (snapshot.data != null && snapshot.data?.length != 0) {
             //   print(snapshot.data?[0]);
             // }
-            // print("LEN: " snapshot.data?.length);
-            return carePlanCardGenerator(snapshot.data?[0]);
-            // return Container();
+            //print("LEN: " + snapshot.data.length.toString());
+            if (snapshot.hasData) {
+              if (DataStorage.carePlans == null) {
+                return Text("NO data");
+              } else {
+                print("TYPE: " + DataStorage.carePlans.runtimeType.toString());
+                return carePlanCardGenerator(DataStorage.carePlans);
+              }
+            }
+            return Container();
           },
         )
         // carePlanCardGenerator()

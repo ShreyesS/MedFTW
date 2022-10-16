@@ -258,18 +258,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> Buttons() {
     return <Widget>[
-      FutureBuilder(
-          future: getNameRequest(),
-          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container(
-                child: Text(""),
-              );
-            } else {
-              DataStorage.name = snapshot.data;
-              return welcomeText();
-            }
-          }),
+      getNmObject(),
+      // FutureBuilder(
+      //     future: getNameRequest(),
+      //     builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+      //       if (snapshot.data == null) {
+      //         return Container(
+      //           child: Text(""),
+      //         );
+      //       } else {
+      //         DataStorage.name = snapshot.data;
+      //         return welcomeText();
+      //       }
+      //     }),
       // Text("Welcome " + DataStorage.name + "!",
       //     style: TextStyle(
       //         fontFamily: 'Montserrat',
@@ -371,6 +372,7 @@ Expanded _buildButtonCard(String title, MaterialColor color, onClick) {
                       children: <Widget>[
                         // const SizedBox(width: 100, height: 10),
                         Text(title,
+                          textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
