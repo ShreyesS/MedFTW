@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:tush/app_config/palette.dart';
+import 'package:medftw/app_config/palette.dart';
 
 class Tipsforstudents extends StatelessWidget {
 

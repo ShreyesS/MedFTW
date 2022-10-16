@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tush/app_screens/UpcomingInternships.dart';
-import 'package:tush/app_screens/screens.dart';
+import 'package:medftw/app_screens/UpcomingInternships.dart';
+import 'package:medftw/app_screens/screens.dart';
 import 'dart:async';
 
-import 'package:tush/app_screens/upcomingEvents.dart';
+import 'package:medftw/app_screens/upcomingEvents.dart';
 
 class BottomNavScreen extends StatefulWidget {
   @override
