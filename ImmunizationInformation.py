@@ -16,3 +16,5 @@ def getImmunizationInformation(id):
         print(concatenatedString)
     
     return lst
+
+

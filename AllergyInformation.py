@@ -30,8 +30,6 @@ def getAllergyInformation(id):
 
 
 
-print(getAllergyInformation(1))
-
 
 
 

@@ -9,7 +9,7 @@ headers = {
 ourLink = "https://fhir.sz5jd1jcumq1.static-test-account.isccloud.io/"
 # https://portal.events.isccloud.io/deployments/sz5jd1jcumq1/overview
 
-def getRequest(resource="", att=""):
+def getRequest(resource="", att="", numPages=False):
     response = requests.get(f'{ourLink}{resource}{att}', headers=headers, verify=True)
     if not response:
         print('Resource not Found')
@@ -17,6 +17,11 @@ def getRequest(resource="", att=""):
     data = response.json()
     if str(data['resourceType']) == 'Bundle':
         pages = -(data['total']//-100)
+        if numPages:
+            if numPages > pages:
+                print('Asked for too many pages, returning all pages')
+            else:
+                pages = numPages
         print(f'Loading {pages} page(s)')
         if pages == 0:
             print('No Data Found')
