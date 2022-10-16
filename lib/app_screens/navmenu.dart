@@ -13,9 +13,7 @@ class BottomNavScreen extends StatefulWidget {
 class _BottomNavScreenState extends State<BottomNavScreen> {
   final List _screens = [
     HomeScreen(),
-    StudyMaterials(),
     UpcomingEvents(),
-    InternshipWidget(),
     Tipsforstudents(),
   ];
   int _currentIndex = 0;
@@ -34,18 +32,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
         elevation: 0.0,
-        items: [
-          Icons.home,
-          Icons.menu_book_outlined,
-          Icons.event_available,
-          Icons.work,
-          Icons.face_retouching_natural
-        ]
+        items: [Icons.home, Icons.medical_services, Icons.location_on]
             .asMap()
             .map((key, value) => MapEntry(
                   key,
                   BottomNavigationBarItem(
-                    title: Text(''),
+                    label: '',
                     icon: Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 6.0,
