@@ -5,9 +5,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:medftw/DataStorage.dart';
 import 'package:http/http.dart' as http;
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:medftw/app_screens/screens.dart';
-import 'package:medftw/app_screens/MedicationRecord.dart';
-
 
 import 'dart:convert';
 
@@ -284,8 +281,8 @@ class _HomeScreenState extends State<HomeScreen> {
       Flexible(
         child: Row(
           children: <Widget>[
-            _buildButtonCard('Allergies', Colors.lightBlue, onClickAllergies()),
-            _buildButtonCard('Immunizations', Colors.red, onClickImmunizations()),
+            _buildButtonCard('Allergies', Colors.lightBlue, () {}),
+            _buildButtonCard('Immunizations', Colors.red, () {}),
           ],
         ),
       ),
@@ -293,14 +290,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: <Widget>[
             _buildButtonCard(
-                'Personalized Practitioners', Colors.orange, onPersonalizedPractitioners()),
+                'Personalized Practitioners', Colors.orange, () {}),
           ],
         ),
       ),
       Flexible(
         child: Row(
           children: <Widget>[
-            _buildButtonCard('Medication Record', Colors.green, onClickMedicationRecord()),
+            _buildButtonCard('Medication Record', Colors.green, () {}),
             _buildButtonCard('Care Plan', Colors.pink, onClickCarePlan)
             // Image.memory(base64Decode('base64String'))
           ],
@@ -318,26 +315,9 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
   }
 
-  onClickAllergies() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => Allergies()));
-  }
-
-  onClickImmunizations() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => Immunizations()));
-  }
-
-  onPersonalizedPractitioners() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => PersonalizedPractitioners(DataStorage.name)));
-  }
-
-  onClickMedicationRecord() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => MedicationRecord()));
-  }
-  
   onClickCarePlan() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CarePlan()));
   }
-
 
   onClick() {
     print("Clicked Button");

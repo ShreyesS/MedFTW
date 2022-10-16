@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PersonalizedPractitioners extends StatelessWidget {
+class UpcomingEvents extends StatelessWidget {
   String patientName = "";
-  PersonalizedPractitioners(patientName);
+  UpcomingEvents(patientName);
 
   _launchURLmun() async {
     const url = 'https://munlist.com/';
@@ -32,7 +32,7 @@ class PersonalizedPractitioners extends StatelessWidget {
       10: "International Crisis Summit MUN 2021"
     };
     return Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.pink,
       body: ListView(
         children: <Widget>[
           Padding(padding: EdgeInsets.only(top: 50.0)),

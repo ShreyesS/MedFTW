@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SATmaterials extends StatelessWidget {
-  _launchURLsatOff() async {
-    const url = 'https://collegereadiness.collegeboard.org/sat';
+
+class CambridgeContainer extends StatelessWidget {
+  _launchURLCambridgeofficial() async {
+    const url = 'https://www.cambridgeinternational.org/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -12,18 +13,27 @@ class SATmaterials extends StatelessWidget {
     }
   }
 
-  _launchURLsatPT() async {
+  _launchURLcieChem() async {
+    const url = 'https://www.chemguideforcie.co.uk/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLciePMT() async {
+    const url = 'https://www.physicsandmathstutor.com/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLciePast() async {
     const url =
-        'https://collegereadiness.collegeboard.org/sat/practice/full-length-practice-tests';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _launchURLsatKA() async {
-    const url = 'https://www.khanacademy.org/SAT';
+        'https://pastpapers.papacambridge.com/?dir=Cambridge%20International%20Examinations%20%28CIE%29';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -35,7 +45,7 @@ class SATmaterials extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.orange,
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -48,29 +58,19 @@ class SATmaterials extends StatelessWidget {
           )
         ],
         title: Text(
-          "SAT",
+          "Cambridge International",
           textAlign: TextAlign.center,
         ),
       ),
       body: ListView(children: <Widget>[
         Padding(padding: EdgeInsets.only(top: 50.0)),
         Text(
-          "SAT",
+          "The Cambridge International Curriculum",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 30,
             fontFamily: "Montserrat",
-            color: Colors.white,
             fontWeight: FontWeight.w600,
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(top: 20.0)),
-        Text(
-          "The SAT is a standardized examination, administed by the College Board. It is mainly used in college admissions to the U.S",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: "Montserrat",
             color: Colors.white,
           ),
         ),
@@ -81,10 +81,11 @@ class SATmaterials extends StatelessWidget {
             width:50,
             height:50,
             child:ElevatedButton(
-            child: Text("The official SAT website"),
-            onPressed: _launchURLsatOff,
+            child: Text("The official Cambridge International Website"),
+            onPressed: _launchURLCambridgeofficial,
+            //style: const Styles.buttonTextStyle,
             style: ElevatedButton.styleFrom(
-              primary: Colors.pink,
+              primary: Colors.orange,
               onPrimary: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
@@ -97,10 +98,10 @@ class SATmaterials extends StatelessWidget {
             width:50,
             height:50,
             child:ElevatedButton(
-          child: Text("Official SAT Practice Tests"),
-          onPressed: _launchURLsatPT,
+          child: Text("A level Chemistry Revision Material"),
+          onPressed: _launchURLcieChem,
           style: ElevatedButton.styleFrom(
-            primary: Colors.pink,
+            primary: Colors.orange,
             onPrimary: Colors.white,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
@@ -114,10 +115,10 @@ class SATmaterials extends StatelessWidget {
             width:50,
             height:50,
             child:ElevatedButton(
-          child: Text("Khan Academy Practice Resources"),
-          onPressed: _launchURLsatKA,
+          child: Text("A level Physics Study Material"),
+          onPressed: _launchURLciePMT,
           style: ElevatedButton.styleFrom(
-            primary: Colors.pink,
+            primary: Colors.orange,
             onPrimary: Colors.white,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
@@ -125,6 +126,21 @@ class SATmaterials extends StatelessWidget {
         )),
         Padding(padding: EdgeInsets.only(top: 50.0)),
 
+
+
+        SizedBox(
+            width:50,
+            height:50,
+            child:ElevatedButton(
+          child: Text("Available Past Papers"),
+          onPressed: _launchURLciePast,
+          style: ElevatedButton.styleFrom(
+            primary: Colors.orange,
+            onPrimary: Colors.white,
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0)),
+          ),
+        )),
 
       ]),
     );
